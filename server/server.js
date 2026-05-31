@@ -57,7 +57,7 @@ app.post("/upload", upload.single("audio"), async (req, res) => {
 
     exec(
       `source ../whisper-env/bin/activate && python ../transcribe.py "${req.file.path}"`,
-      { shell: "/bin/zsh" },
+      {shell: "/bin/bash"},
       (error, stdout, stderr) => {
 
         if (error) {
