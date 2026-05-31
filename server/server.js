@@ -2,16 +2,11 @@ const express = require("express");
 const cors = require("cors");
 const multer = require("multer");
 const dotenv = require("dotenv");
-const OpenAI = require("openai");
-const fs = require("fs");
+const { exec } = require("child_process");
 
 dotenv.config();
 
 const app = express();
-
-const client = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
 
 app.use(cors());
 app.use(express.json());
@@ -39,33 +34,52 @@ app.get("/", (req, res) => {
 });
 
 
-// Upload + Whisper Transcription Route
+// Upload + Faster Whisper Route
 app.post("/upload", upload.single("audio"), async (req, res) => {
 
   try {
 
     if (!req.file) {
+
       return res.status(400).json({
         message: "No File Uploaded",
       });
+
     }
 
     console.log("Audio Received");
+    console.log(req.file.path);
 
-    const transcription = await client.audio.transcriptions.create({
+    exec(
+      `source ../whisper-env/bin/activate && python ../transcribe.py "${req.file.path}"`,
+      { shell: "/bin/zsh" },
+      (error, stdout, stderr) => {
 
-      file: fs.createReadStream(req.file.path),
+        if (error) {
 
-      model: "whisper-1",
+          console.log(error);
 
-    });
+          return res.status(500).json({
+            message: "Transcription Failed",
+            error: error.message,
+          });
 
-    console.log(transcription.text);
+        }
 
-    res.json({
-      message: "Transcription Success",
-      text: transcription.text,
-    });
+        if (stderr) {
+          console.log(stderr);
+        }
+
+        console.log("Transcript:");
+        console.log(stdout);
+
+        res.json({
+          message: "Transcription Success",
+          text: stdout.trim(),
+        });
+
+      }
+    );
 
   } catch (error) {
 
