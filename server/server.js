@@ -3,8 +3,13 @@ const cors = require("cors");
 const multer = require("multer");
 const dotenv = require("dotenv");
 const { exec } = require("child_process");
+const fs = require("fs");
 
 dotenv.config();
+
+if (!fs.existsSync("uploads")) {
+  fs.mkdirSync("uploads");
+}
 
 const app = express();
 
