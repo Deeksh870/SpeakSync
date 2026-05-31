@@ -154,7 +154,7 @@ function App() {
       setLoading(true);
       const formData = new FormData();
       formData.append("audio", uploadedFile);
-      const response = await axios.post("http://localhost:8000/upload", formData, { headers:{ "Content-Type":"multipart/form-data" } });
+      const response = await axios.post("https://speaksync.onrender.com/upload", formData, { headers:{ "Content-Type":"multipart/form-data" } });
       setUploadText(response.data.text);
       const history = JSON.parse(localStorage.getItem("speechHistory")) || [];
       history.unshift({ id:Date.now(), type:"Upload Audio", fileName:uploadedFile.name, text:response.data.text, date:new Date().toLocaleString() });
