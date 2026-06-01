@@ -1,74 +1,80 @@
+<div align="center">
+
+<br/>
+
 # 🎙️ SpeakSync
 
-SpeakSync is an AI-powered Speech-to-Text web application that enables users to convert spoken audio into text using multiple transcription methods. The application provides real-time speech recognition, audio recording, audio file upload, transcription history management, and secure user authentication.
+### AI-Powered Speech-to-Text Web Application
 
----
+*Turn your voice into text — live, recorded, or uploaded.*
 
-## 🚀 Live Demo
+<br/>
 
-### Frontend
-https://speak-sync-seven.vercel.app
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-speak--sync--seven.vercel.app-00d4ff?style=for-the-badge&logo=vercel&logoColor=white)](https://speak-sync-seven.vercel.app)
+[![Backend](https://img.shields.io/badge/Backend-speaksync.onrender.com-00e5a0?style=for-the-badge&logo=render&logoColor=white)](https://speaksync.onrender.com)
+[![GitHub](https://img.shields.io/badge/Source-Deeksh870%2FSpeakSync-8b5cf6?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Deeksh870/SpeakSync)
 
-### Backend
-https://speaksync.onrender.com
+<br/>
 
-### GitHub Repository
-https://github.com/Deeksh870/SpeakSync
+![React](https://img.shields.io/badge/React-20232A?style=flat-square&logo=react&logoColor=61DAFB)
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat-square&logo=vite&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=nodedotjs&logoColor=white)
+![Express](https://img.shields.io/badge/Express-000000?style=flat-square&logo=express&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white)
+![Clerk](https://img.shields.io/badge/Clerk-6C47FF?style=flat-square&logo=clerk&logoColor=white)
+![Vercel](https://img.shields.io/badge/Vercel-000000?style=flat-square&logo=vercel&logoColor=white)
+
+<br/>
+
+</div>
 
 ---
 
 ## ✨ Features
 
-### 🔐 User Authentication
-- Secure Sign Up and Sign In
-- User session management using Clerk Authentication
-- Protected application access
-
-### 🎤 Live Speech Recognition
-- Real-time speech-to-text conversion
-- Instant transcription display
-- Browser-based speech recognition
-
-### 🎙️ Record & Convert
-- Record audio directly from the microphone
-- Convert recorded speech into text
-- Save transcription results automatically
-
-### 📁 Audio File Upload
-- Upload audio files
-- AI-powered transcription using Faster-Whisper
-- Supports speech-to-text conversion from recorded files
-
-### 📜 Speech History
-- Stores transcription records
-- Displays timestamps for each entry
-- View previous transcriptions
-- Clear history functionality
-
-### 🎨 Modern User Interface
-- Responsive design
-- Dark-themed dashboard
-- Sidebar navigation
-- User-friendly workflow
+| Module | Description |
+|--------|-------------|
+| 🔐 **User Authentication** | Secure Sign Up / Sign In via Clerk. Protected access and session management. |
+| 🎤 **Live Speech Recognition** | Real-time transcription using the Browser Speech Recognition API. |
+| 🎙️ **Record & Convert** | Record your full speech, then generate a clean final transcript. |
+| 📁 **Audio File Upload** | Upload MP3 / WAV / M4A — transcribed via Faster-Whisper AI. |
+| 📜 **Speech History** | All past transcriptions stored with timestamps. Clear anytime. |
+| 🎨 **Modern Dashboard** | Dark-themed UI with sidebar navigation, stat cards, and live activity feed. |
 
 ---
 
-## 🏗️ System Architecture
+## 🚀 Live Demo
 
-```text
-User
-  │
-  ▼
-React Frontend (Vite)
-  │
-  ▼
-Express.js Backend
-  │
-  ▼
+> **Frontend** → [speak-sync-seven.vercel.app](https://speak-sync-seven.vercel.app)
+>
+> **Backend API** → [speaksync.onrender.com](https://speaksync.onrender.com)
+
+---
+
+## 🏗️ Architecture
+
+```
+User (Browser)
+     │
+     ▼
+React Frontend  ──────────────────────────────────────────
+(Vite + Clerk)       Browser Speech Recognition API
+     │                       ▲
+     │ audio file             │ live text
+     ▼                       │
+Express Backend  ◄────────────
+(Node.js + Multer)
+     │
+     ▼
+Python Script
+(transcribe.py)
+     │
+     ▼
 Faster-Whisper Model
-  │
-  ▼
-Transcribed Text
+(HuggingFace)
+     │
+     ▼
+Transcribed Text  ──► JSON Response ──► React Frontend
 ```
 
 ---
@@ -76,62 +82,62 @@ Transcribed Text
 ## 🛠️ Tech Stack
 
 ### Frontend
-- React.js
-- Vite
-- CSS
-- Axios
-- Clerk Authentication
+- **React.js** + **Vite** — fast, modern SPA
+- **Axios** — HTTP requests to the backend
+- **Clerk** — authentication and user management
 
 ### Backend
-- Node.js
-- Express.js
-- Multer
-- Python
+- **Node.js** + **Express.js** — REST API server
+- **Multer** — audio file upload handling
+- **Python** — bridges Node to the Whisper model
 
-### AI & Speech Processing
-- Faster-Whisper
-- Hugging Face Models
-- Browser Speech Recognition API
+### AI & Speech
+- **Faster-Whisper** — highly optimised Whisper model for transcription
+- **HuggingFace Models** — model hosting and inference
+- **Web Speech Recognition API** — browser-native live transcription
 
 ### Deployment
-- Vercel (Frontend)
-- Render (Backend)
-- GitHub (Version Control)
+- **Vercel** — frontend hosting
+- **Render** — backend hosting
+- **GitHub** — version control
 
 ---
 
 ## 📂 Project Structure
 
-```text
-SpeakSync
+```
+SpeakSync/
 │
-├── client
-│   ├── src
-│   ├── public
+├── client/                  # React frontend
+│   ├── src/
+│   │   ├── App.jsx          # Main app + all tab views
+│   │   ├── main.jsx         # Clerk auth + routing
+│   │   └── index.css
+│   ├── public/
 │   └── package.json
 │
-├── server
-│   ├── uploads
-│   ├── server.js
-│   ├── requirements.txt
+├── server/                  # Express backend
+│   ├── uploads/             # Temp audio file storage
+│   ├── server.js            # API routes + Multer config
+│   ├── requirements.txt     # Python dependencies
 │   └── package.json
 │
-├── transcribe.py
-│
+├── transcribe.py            # Faster-Whisper inference script
 └── README.md
 ```
 
 ---
 
-## ⚙️ Installation
+## ⚙️ Installation & Setup
 
-### Clone Repository
+### 1. Clone the repository
 
 ```bash
 git clone https://github.com/Deeksh870/SpeakSync.git
+cd SpeakSync
 ```
 
-### Frontend Setup
+### 2. Frontend
 
 ```bash
 cd client
@@ -139,7 +145,12 @@ npm install
 npm run dev
 ```
 
-### Backend Setup
+> Add your Clerk publishable key to `.env`:
+> ```
+> VITE_CLERK_PUBLISHABLE_KEY=your_key_here
+> ```
+
+### 3. Backend
 
 ```bash
 cd server
@@ -147,7 +158,7 @@ npm install
 node server.js
 ```
 
-### Python Dependencies
+### 4. Python dependencies
 
 ```bash
 pip install faster-whisper
@@ -157,39 +168,37 @@ pip install faster-whisper
 
 ## 📸 Application Modules
 
-### Dashboard
-Central hub providing access to all speech-to-text functionalities.
+### 🏠 Dashboard
+Central hub with stat cards, live monitor, recent activity feed, and quick-access feature cards.
 
-### Live Speech
-Converts live spoken words into text instantly.
+### 🎤 Live Speech
+Converts spoken words into text in real time using the browser's built-in Speech Recognition API. Every word appears instantly as you speak.
 
-### Record & Convert
-Records microphone input and converts speech into text.
+### 🎙️ Record & Convert
+Records microphone input continuously. When you stop recording, the full transcript is generated and saved to history automatically.
 
-### Upload Audio
-Uploads audio files and generates transcriptions using Faster-Whisper.
+### 📁 Upload Audio
+Accepts audio file uploads and sends them to the Express backend, which runs `transcribe.py` using Faster-Whisper to return a full transcript.
 
-### History
-Displays all previous transcription records with timestamps.
+### 📜 History
+Displays all transcription records (type, filename, text, timestamp) stored in `localStorage`. Supports full history clear.
 
 ---
 
 ## 🔍 Future Enhancements
 
-- Multi-language transcription
-- Translation support
-- Download transcription as PDF
-- Cloud database integration
-- Speaker identification
-- Audio summarization using Generative AI
+- [ ] 🌐 Multi-language transcription (90+ languages via Whisper)
+- [ ] 🔄 Real-time translation support
+- [ ] 📄 Export transcription as PDF
+- [ ] 🗄️ Cloud database integration (replace localStorage)
+- [ ] 👤 Speaker diarization / identification
+- [ ] 🤖 AI summarization of long transcripts
 
 ---
 
 ## 👩‍💻 Developed By
 
-**Deekshitha S**
-
-Final Year Engineering Project
+**Deekshitha S** — Final Year Engineering Project
 
 ---
 
